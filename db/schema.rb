@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160602164008) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "checkins", force: :cascade do |t|
     t.integer  "location_id"
     t.string   "user"
@@ -20,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160602164008) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "checkins", ["location_id"], name: "index_checkins_on_location_id"
+  add_index "checkins", ["location_id"], name: "index_checkins_on_location_id", using: :btree
 
   create_table "locations", force: :cascade do |t|
     t.string   "mac_address"
@@ -29,4 +32,5 @@ ActiveRecord::Schema.define(version: 20160602164008) do
     t.datetime "updated_at",  null: false
   end
 
+  add_foreign_key "checkins", "locations"
 end
