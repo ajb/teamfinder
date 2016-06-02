@@ -56,7 +56,7 @@ class ApiController < ApplicationController
       return render_error('please provide a name for this location')
     end
 
-    if (current_checkin.location.name.strip.downcase != params[:name].strip.downcase)
+    if !fuzzy_match(current_checkin.location.name, params[:name])
       current_checkin.location.location_names.create!(name: params[:name])
     end
 
@@ -80,5 +80,9 @@ class ApiController < ApplicationController
     hash = { ok: true }
     hash[:status] = status if status.present?
     render json: hash
+  end
+
+  def fuzzy_match(str1, str2)
+    str1.to_s.strip.downcase == str2.to_s.strip.downcase
   end
 end
