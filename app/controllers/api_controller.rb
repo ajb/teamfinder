@@ -6,7 +6,7 @@ class ApiController < ApplicationController
   end
 
   def status
-    users = Array(params[:users])
+    users = Array(params[:users]).select(&:present?)
 
     if users.blank?
       return render_error('must provide an array of users')
