@@ -32,7 +32,13 @@ class ApiController < ApplicationController
       user: params[:user]
     )
 
-    render_ok
+    render_ok(
+      if checkin.location.name.present?
+        "You are... #{current_checkin.location.name}"
+      else
+        'You are in an unknown location.'
+      end
+    )
   end
 
   def update_location_name_by_user
@@ -68,7 +74,9 @@ class ApiController < ApplicationController
     render json: { ok: false, status: msg }, status: :bad_request
   end
 
-  def render_ok
-    render json: { ok: true }
+  def render_ok(status = nil)
+    hash = { ok: true }
+    hash[:status] = status if status.present?
+    render json: hash
   end
 end
