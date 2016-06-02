@@ -34,7 +34,7 @@ class ApiController < ApplicationController
 
     render_ok(
       if checkin.location.name.present?
-        "You are... #{current_checkin.location.name}"
+        "You are... #{checkin.location.name}"
       else
         'You are in an unknown location.'
       end
