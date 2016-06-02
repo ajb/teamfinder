@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602164008) do
+ActiveRecord::Schema.define(version: 20160602192808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,12 +25,21 @@ ActiveRecord::Schema.define(version: 20160602164008) do
 
   add_index "checkins", ["location_id"], name: "index_checkins_on_location_id", using: :btree
 
-  create_table "locations", force: :cascade do |t|
-    t.string   "mac_address"
+  create_table "location_names", force: :cascade do |t|
+    t.integer  "location_id"
     t.string   "name"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
+  add_index "location_names", ["location_id"], name: "index_location_names_on_location_id", using: :btree
+
+  create_table "locations", force: :cascade do |t|
+    t.string   "mac_address"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   add_foreign_key "checkins", "locations"
+  add_foreign_key "location_names", "locations"
 end

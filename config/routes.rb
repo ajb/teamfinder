@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :checkins
     resources :locations
+    resources :location_names
 
     root to: "checkins#index"
   end

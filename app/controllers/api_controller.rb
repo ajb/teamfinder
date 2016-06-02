@@ -56,7 +56,9 @@ class ApiController < ApplicationController
       return render_error('please provide a name for this location')
     end
 
-    current_checkin.location.update!(name: params[:name])
+    if (current_checkin.location.name.strip.downcase != params[:name].strip.downcase)
+      current_checkin.location.location_names.create!(name: params[:name])
+    end
 
     render_ok
   end

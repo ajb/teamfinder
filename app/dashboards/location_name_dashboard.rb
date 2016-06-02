@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class LocationDashboard < Administrate::BaseDashboard
+class LocationNameDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,10 +8,8 @@ class LocationDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    checkins: Field::HasMany,
-    location_names: Field::HasMany,
+    location: Field::BelongsTo,
     id: Field::Number,
-    mac_address: Field::String,
     name: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -23,18 +21,18 @@ class LocationDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :checkins,
+    :location,
     :id,
-    :mac_address
+    :name,
+    :created_at,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :checkins,
-    :location_names,
+    :location,
     :id,
-    :mac_address,
+    :name,
     :created_at,
     :updated_at,
   ].freeze
@@ -43,14 +41,14 @@ class LocationDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :checkins,
-    :mac_address
+    :location,
+    :name,
   ].freeze
 
-  # Overwrite this method to customize how locations are displayed
+  # Overwrite this method to customize how location names are displayed
   # across all pages of the admin dashboard.
   #
-  def display_resource(location)
-    "#{location.name || 'No name'} (##{location.id})"
-  end
+  # def display_resource(location_name)
+  #   "LocationName ##{location_name.id}"
+  # end
 end
