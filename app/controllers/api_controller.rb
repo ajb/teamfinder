@@ -1,4 +1,6 @@
 class ApiController < ApplicationController
+  include ActionView::Helpers::DateHelper
+
   before_action :ensure_api_token_is_valid
 
   rescue_from ActiveRecord::RecordInvalid do |e|
@@ -17,7 +19,7 @@ class ApiController < ApplicationController
         h[u] = if (checkin= Checkin.most_recent_for_user(u))
                  {
                    location: checkin.location.name || 'Unknown location',
-                   created_at: checkin.created_at
+                   time_ago: time_ago_in_words(checkin.created_at)
                  }
                end
       end
