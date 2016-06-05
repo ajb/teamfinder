@@ -1,7 +1,7 @@
 Teamfinder
 ---
 
-Teamfinder is a simple service for tracking the physical locations of you and your teammates.
+Teamfinder is a minimally-creepy service for tracking the physical locations of you and your teammates.
 
 It determines your location by the MAC address of the wireless access point that you're currently connected to. This is a lot less creepy than trying to track folks by GPS, while still being accurate enough to determine that "Adam is in the 3rd floor kitchen." We also have our script configured to only track locations when we're logged into Slack, which is a good indicator for if someone is working or not.
 
