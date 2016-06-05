@@ -8,17 +8,13 @@ class ApiController < ApplicationController
   end
 
   def status
-    users = Array(params[:users]).select(&:present?)
-
-    if users.blank?
-      return render_error('must provide an array of users')
-    end
+    users = Checkin.where('created_at > ?', 2.weeks.ago).distinct.pluck(:user)
 
     return_arr = {}.tap do |h|
       users.each do |u|
-        h[u] = if (checkin= Checkin.most_recent_for_user(u))
+        h[u] = if (checkin = Checkin.most_recent_for_user(u))
                  {
-                   location: checkin.location.name || 'Unknown location',
+                   location: checkin.location.as_json(only: [:id], methods: [:name]),
                    time_ago: time_ago_in_words(checkin.created_at)
                  }
                end
